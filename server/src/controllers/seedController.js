@@ -1,6 +1,8 @@
 const data = require("../data");
 const User = require("../models/userModel")
 const seedUser = async(req,res,next) =>{
+
+    //main reason hocche sob reset kore newa
     try{
         //deleting all existing users
         await User.deleteMany({});

@@ -1,5 +1,6 @@
 # Ecommerce MERN stack project
 ## basic setup
+<!-- 1st commit -->
 1.Envirnment setup
 2.Express server setup ->express
 3.HTTP request & response
@@ -13,8 +14,19 @@
 12.MVC architecture
 13.Connect to mongodb database
 14.Schema & model for user
-15.Create seed route for testing
+<!-- 2nd commit -->
+<!-- seed main reason hocche sob reset kore newa -->
+15.Create seed route for testing 
 16.GET/API/USERS -> isAdmin -> getAlLUsers -> searchByName + pagination functionality
 17.ResponseHandler controller for error or success
 18.GET api/users/:id -> get a single user by id
+<!-- 3rd Commit -->
+19.How to create services in the backend
+20.DELETE /api/users/:id -> delete single user by id
+21.Refactoring & resusabilty, dynamic
+22.DeleteImage helper
+23.POST api/users -> create an user 
+
+
+
 
