@@ -25,7 +25,22 @@
 20.DELETE /api/users/:id -> delete single user by id
 21.Refactoring & resusabilty, dynamic
 22.DeleteImage helper
-23.POST api/users -> create an user 
+<!-- post branch -->
+23.POST api/users/process-register -> process the registration
+24.create JWT
+25.setup smtp server & prepare email
+26.send email with nodemailer (nodemailer user for send email)
+27.POST /api/users/verify -> verify + registration into database
+28.Add multer middleware for file upload
+29.add express validator middleware
+30.refactoring file uploading
+31.
+
+
+ojwaewhblrsjtsly
+
+nodemailer user for send email
+
 
 
 

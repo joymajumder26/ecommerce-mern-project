@@ -25,23 +25,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/api/users',userRouter)
 app.use('/api/seed',seedRouter)
 
-// const isLoggedIn = (req, res, next) => {
-//   //middleware ..api/user a hit krle age etay asbe..then api/user a jabe
-//   // console.log("is loggedIn Middleware");
-//   const login = true;
-//   if (login) {
-//     req.body.id = 101;
-//     next();
-//   } else {
-//     return res.status(401).json({
-//       message: "Please Login First",
-//     });
-//   }
-// };
 
-// app.use(isLoggedIn)//sob khanei kaj krbe.
-
-//get
 
 app.get("/test", (req, res) => {
   res.status(200).send({ message: "api is working perfectly" }); //json format a dekhabe
@@ -51,9 +35,7 @@ app.get("/test", (req, res) => {
 
 //client error handling
 app.use((req, res, next) => {
-  //jodi route na pay tahle ai error dibe
-  //   createError(404, "Route not found");
-  //   next();
+ 
   next(createError(404, "Route not found"));
 });
 //server error handling ->all the errors
