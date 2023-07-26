@@ -36,7 +36,13 @@
 30.should we store image as string or buffer?
 <!-- 4th commit -->
 31.PUT /api/users/:id -> update a single user by id
-32.
+32.Authentication and authorization (access token generate)
+<!-- 5th commit -->
+33.POST /api/auth/login ->user login
+34.POST /api/auth/logout ->user logout
+35.Middlewares ->isloggedIn,isLoggedout,is admin
+36.input validation when signed in and refactoring
+36.GET /api/auth/refresh ->refresh the token
 
 
 ojwaewhblrsjtsly

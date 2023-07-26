@@ -15,7 +15,7 @@ const getUsers = async (req, res, next) => {
   try {
     const search = req.query.search || "";
     const page = Number(req.query.page) || 1;
-    const limit = Number(req.query.limit) || 5;
+    const limit = Number(req.query.limit) || 10;
 
     const searchRegExp = new RegExp(".*" + search + ".*", "i");
     const filter = {
@@ -56,6 +56,7 @@ const getUsers = async (req, res, next) => {
 
 const getUserById = async (req, res, next) => {
   try {
+    // console.log(req.user);
     const id = req.params.id;
     const options = { password: 0 };
 
