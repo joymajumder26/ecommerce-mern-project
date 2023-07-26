@@ -33,8 +33,10 @@
 27.POST /api/users/verify -> verify + registration into database
 28.Add multer middleware for file upload
 29.add express validator middleware
-30.refactoring file uploading
-31.
+30.should we store image as string or buffer?
+<!-- 4th commit -->
+31.PUT /api/users/:id -> update a single user by id
+32.
 
 
 ojwaewhblrsjtsly

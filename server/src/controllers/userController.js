@@ -7,7 +7,7 @@ const { default: mongoose } = require("mongoose");
 const { findWithId } = require("../services/findItem");
 const { error } = require("console");
 const { deleteImage } = require("../helper/deleteImage");
-const { createJsonWebToken } = require("../helper/jsonWebToken");
+const { createJSONWebToken } = require("../helper/jsonWebToken");
 const { jwtActivationKey, client_url } = require("../secret");
 const EmailWithNodeMail = require("../helper/email");
 
@@ -99,6 +99,12 @@ const processRegister = async (req, res, next) => {
   try {
     const { name, email, password, phone, address } = req.body;
 
+    // if (!req.file) {
+    //   throw createError(400, "image not added");
+    // }
+
+    // const imageBufferString = req.file.buffer.toString("base64");
+
     const userExists = await User.exists({ email: email });
     if (userExists) {
       throw createError(
@@ -107,8 +113,16 @@ const processRegister = async (req, res, next) => {
       );
     }
     //CREATE JWT
-    const token = createJsonWebToken(
-      { name, email, password, phone, address },
+    const token = createJSONWebToken(
+      {
+        name,
+        email,
+        password,
+        phone,
+        address,
+        // image:
+        // imageBufferString
+      },
       jwtActivationKey,
       "10m"
     );
@@ -149,12 +163,12 @@ const activateUserAccount = async (req, res, next) => {
       const decoded = jwt.verify(token, jwtActivationKey);
       if (!decoded) throw createError(401, "Unable to verify user");
       const userExists = await User.exists({ email: decoded.email });
-    if (userExists) {
-      throw createError(
-        409,
-        "User with this email already exists. Please Sign in"
-      );
-    }
+      if (userExists) {
+        throw createError(
+          409,
+          "User with this email already exists. Please Sign in"
+        );
+      }
       await User.create(decoded);
 
       return successResponse(res, {
@@ -166,10 +180,52 @@ const activateUserAccount = async (req, res, next) => {
         throw createError(401, "Token has expired");
       } else if (error.name === "JsonWebTokenError") {
         throw createError(401, "Invalid Token");
-      }else{
+      } else {
         throw error;
       }
     }
+  } catch (error) {
+    next(error);
+  }
+};
+const updateUserById = async (req, res, next) => {
+  try {
+    const userId = req.params.id;
+    const options = { password: 0 };
+    await findWithId(User, userId, options);
+    const updateOptions = { new: true, runValidators: true, context: "query" };
+    let updates = {};
+
+    for (let key in req.body) {
+      if (["name", "password", "phone", "address"].includes(key)) {
+        updates[key] = req.body[key];
+      } else if (["email"].includes(key)) {
+        throw new Error("Email can not be updated");
+      }
+    }
+
+    const image = req.file;
+    if (image) {
+      if (image.size > 1024 * 1024 * 2) {
+        throw createError(400, "File too large. It mush be less than 2 MB");
+      }
+      updates.image = req.body.image;
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      updates,
+      updateOptions
+    ).select("-password");
+    if (!updatedUser) {
+      throw createError(404, "User with this id does not exist");
+    }
+
+    return successResponse(res, {
+      statusCode: 200,
+      message: "user was updated Successfully",
+      payload: updatedUser,
+    });
   } catch (error) {
     next(error);
   }
@@ -181,4 +237,5 @@ module.exports = {
   deleteUserById,
   processRegister,
   activateUserAccount,
+  updateUserById,
 };

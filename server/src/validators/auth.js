@@ -30,8 +30,21 @@ const validateUserRegistration = [
     .withMessage("Address is required. Enter your address")
     .isLength({ min: 3 })
     .withMessage("Address should be at least 3 character long"),
-  body("phone").trim().notEmpty().withMessage("Phone is required. Enter your phone"),
-  body("image").optional().isString().withMessage("Image upload is required"),
+  body("phone")
+    .trim()
+    .notEmpty()
+    .withMessage("Phone is required. Enter your phone"),
+  body("image")
+  // .custom((value,{req})=>{
+  //   if(!req.file || !req.file.buffer){
+  //     throw new Error("User image is required");
+
+  //   }
+  //   return true;
+  // })
+  .optional()
+  .isString()
+  .withMessage("Image upload is required"),
 ];
 //sign in validation
 

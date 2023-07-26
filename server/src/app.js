@@ -8,6 +8,7 @@ const userRouter = require("./routers/userRouter");
 const { seedUser } = require("./controllers/seedController");
 const seedRouter = require("./routers/seedRouter");
 const { errorResponse } = require("./controllers/responseController");
+const authRouter = require("./routers/authRouter");
 const app = express();
 
 const rateLimiter = rateLimit({
@@ -22,8 +23,11 @@ app.use(xssClean());
 app.use(morgan("dev")); //error ta dekhabe terminal a
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+
 app.use('/api/users',userRouter)
 app.use('/api/seed',seedRouter)
+app.use('/api/auth',authRouter)
 
 
 
